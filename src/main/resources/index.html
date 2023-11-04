@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poker</title>
+</head>
+<body>
+<h1>Cartas do Poker</h1>
+<ul id="cards-list"></ul>
+
+<script>
+        function fetchApiData() {
+            fetch('http://localhost:8080/poker')
+                .then(response => response.json())
+                .then(data => {
+                    const cardsList = document.getElementById('cards-list');
+                    cardsList.innerHTML = ''; // Limpa a lista de cartas
+
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            const card = data[key];
+                            const listItem = document.createElement('li');
+                            listItem.textContent = `${key}: ${card}`;
+                            cardsList.appendChild(listItem);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                });
+        }
+
+        fetchApiData();
+    </script>
+</body>
+</html>
